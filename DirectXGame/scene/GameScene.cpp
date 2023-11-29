@@ -163,6 +163,7 @@ void GameScene::ItemOnCollision() {
 			areaItemCollisionTimeFlag = 1;
 			areaItemCollisionFlag = 0;
 			boss_->ItemOnColision();
+			areaItem_->Random();
 		}
 	}
 	
@@ -177,6 +178,7 @@ void GameScene::ItemOnCollision() {
 			areaItemCollisionTimeFlag = 1;
 			areaItemCollisionFlag = 0;
 			boss_->ItemOnColision();
+			areaItem_->Random();
 		}
 	}
 	if (areaItemCollisionTimeFlag == 1) {
