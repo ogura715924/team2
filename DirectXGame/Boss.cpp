@@ -8,8 +8,8 @@ void Boss::Initialize(Model* modelB, Model* modelE) {
 	modelE_ = modelE;
 
 	worldTransform_.Initialize();
-	 RotateSpeed = 0.01f;
-	TimingTimer = 60;
+	 RotateSpeed = 0.07f;
+	TimingTimer = 20;
 	 worldTransform_.translation_ = {0.0f, 1.0f, 30.0f};
 
 	// ライフ
@@ -18,6 +18,7 @@ void Boss::Initialize(Model* modelB, Model* modelE) {
 	RespawnTime = 600;
 
 	phase_ = Phase::Attack;
+
 }
 
 void Boss::Update() {
@@ -52,7 +53,7 @@ void Boss::Update() {
 			return false;
 		});
 		
-		//60秒経ったらまた攻撃し始める
+		//10秒経ったらまた攻撃し始める
 		RespawnTime -= 1;
 		if (RespawnTime <= 0) {
 			phase_ = Phase::Attack;
@@ -60,7 +61,6 @@ void Boss::Update() {
 		}
 			break;
 	}
-
 
 }
 
@@ -80,7 +80,7 @@ void Boss::Timing() {
 	//タイマーが0になったら
 	if (TimingTimer<=0) {
 		//小さい敵の速度
-		Vector3 velocity(0.1f, 0, 0.1f);
+		Vector3 velocity(0.2f, 0, 0.2f);
 		//速度ベクトルを自機に向きに合わせて回転させる
 		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 		// 敵の生成
@@ -88,14 +88,16 @@ void Boss::Timing() {
 		newEnemynum->Initialize(modelE_, worldTransform_.translation_,velocity);
 		// 敵の登録
 		enemyNums_.push_back(newEnemynum);
-		TimingTimer = 60;
+		TimingTimer = 20;
 	}
 }
 
 void Boss::ItemOnColision() {
 	//アイテムとプレイヤーが当たったら小さい敵全員が死ぬ
 	for (LotEnemy* enemynum : enemyNums_) {
-		enemynum->OnCollision();
+		enemynum->DieMotion();
+			//enemynum->OnCollision();
 	}
 	phase_ = Phase::noAttack;
 }
+

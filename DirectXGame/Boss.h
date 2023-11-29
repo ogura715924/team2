@@ -18,7 +18,6 @@ public:
 	//アイテム
 	void ItemOnColision();
 
-
 	//小さい敵
 	const std::list<LotEnemy*>& GetLotEnemys() const { return enemyNums_; }
 
@@ -41,7 +40,7 @@ public:
 	// 小さい敵を複数にする
 	std ::list<LotEnemy*> enemyNums_;
 	//
-	int TimingTimer=60;
+	int TimingTimer;
 
 	// ライフ
 	int32_t Life_ = 0;
