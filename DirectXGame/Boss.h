@@ -9,14 +9,14 @@
 
 class Boss {
 public:
-	void Initialize(Model* modelB,Model*modelE);
+	void Initialize(Model* model, Model* modelA, Model* modelB, Model* modelE);
 	void Update();
 	void Draw(const ViewProjection& viewProjection_);
 	// 敵が出るタイミング
 	void Timing();
 	// 衝突を検出したら呼び出されるコールバック関数
 	//アイテム
-	void ItemOnColision();
+	void ItemOnCollisions();
 
 	//小さい敵
 	const std::list<LotEnemy*>& GetLotEnemys() const { return enemyNums_; }
@@ -29,9 +29,19 @@ public:
 	private:
 	Input* input_ = nullptr;
 	// ワールド変換データ
-	    WorldTransform worldTransform_;
+	 WorldTransform worldTransform_;
+	// 体ワールド変換データ
+	 WorldTransform worldTransformBody_;
+	    // 腕ワールド変換データ
+	 WorldTransform worldTransformArm_;
+
+	  // 小敵ワールド変換データ
+	 WorldTransform worldTransformLot_;
+
 	// モデル
-	Model* modelB_ = nullptr;
+	    Model* model_;
+	 Model* modelA_ = nullptr;
+	    Model* modelB_ = nullptr;
 	    Model* modelE_ = nullptr;
 	//ボスの回るスピード
 	float RotateSpeed;
