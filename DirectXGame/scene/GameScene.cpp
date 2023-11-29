@@ -93,6 +93,22 @@ void GameScene::Initialize() {
 	//軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 
+
+	//サウンド
+	BGMSound_ = audio_->LoadWave("sound/BGM.wav");
+	LotDanageSound_ = audio_->LoadWave("sound/lotdamage.wav");
+	BossDamageSound_ = audio_->LoadWave("sound/bossdamage.wav");
+	ItemSound_ = audio_->LoadWave("sound/item.wav");
+	SystemSound_ = audio_->LoadWave("sound/system.wav");
+
+	audio_->PlayWave(soundDataHandle_,true);
+	//音は適当に用意したものなので気に入らなければ変更
+	// 一応ファイルには他にボスの腕が落ちる音と自機の攻撃の音が入ってる
+	//敵からのダメージ音各場所に置くボスと小さいの
+	//audio_->PlayWave(LotDanageSound_);
+	//audio_->PlayWave(BossDamageSound_);
+	//シーン切り替えとかのキーを押したときの音
+	//audio_->PlayWave(SystemSound_);
 }
 
 void GameScene::Update() {
@@ -164,6 +180,7 @@ void GameScene::ItemOnCollision() {
 			areaItemCollisionFlag = 0;
 			boss_->ItemOnColision();
 			areaItem_->Random();
+			audio_->PlayWave(ItemSound_);
 		}
 	}
 	
@@ -179,6 +196,7 @@ void GameScene::ItemOnCollision() {
 			areaItemCollisionFlag = 0;
 			boss_->ItemOnColision();
 			areaItem_->Random();
+			audio_->PlayWave(ItemSound_);
 		}
 	}
 	if (areaItemCollisionTimeFlag == 1) {
